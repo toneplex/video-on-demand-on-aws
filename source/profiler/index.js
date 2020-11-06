@@ -39,6 +39,7 @@ exports.handler = async (event) => {
         let mediaInfo = JSON.parse(event.srcMediainfo);
         event.srcHeight = mediaInfo.video[0].height;
         event.srcWidth = mediaInfo.video[0].width;
+        event.srcRotation = mediaInfo.video[0].rotation;
 
         // Determine encoding by matching the srcHeight to the nearest profile.
         const profiles = [2160, 1080, 720];
@@ -73,11 +74,23 @@ exports.handler = async (event) => {
         // solution defaults
         if (!event.jobTemplate) {
             // Match the jobTemplate to the encoding Profile.
-            const jobTemplates = {
-                '2160': event.jobTemplate_2160p,
-                '1080': event.jobTemplate_1080p,
-                '720': event.jobTemplate_720p
-            };
+            let jobTemplates;
+
+            if ([90.0, 270.0].includes(event.srcRotation )) {
+                // portrait
+                jobTemplates = {
+                    '2160': event.jobTemplate_2160p_Portrait,
+                    '1080': event.jobTemplate_1080p_Portrait,
+                    '720': event.jobTemplate_720p_Portrait
+                };
+            } else {
+                // landscape
+                jobTemplates = {
+                    '2160': event.jobTemplate_2160p,
+                    '1080': event.jobTemplate_1080p,
+                    '720': event.jobTemplate_720p
+                };
+            }
 
             event.jobTemplate = jobTemplates[encodeProfile];
             console.log(`Chosen template:: ${event.jobTemplate}`);

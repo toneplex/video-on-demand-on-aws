@@ -66,6 +66,7 @@ def parse_video_attributes(track):
 
     attributes['width'] = parse_number(track.get('Width'))
     attributes['height'] = parse_number(track.get('Height'))
+    attributes['rotation'] = parse_number(track.get('Rotation'))
     attributes['framerate'] = parse_number(track.get('FrameRate'))
     attributes['scanType'] = track.get('ScanType')
     attributes['aspectRatio'] = track.get('DisplayAspectRatio')

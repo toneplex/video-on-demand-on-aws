@@ -53,7 +53,7 @@ setup(
     author='AWS Solutions Builder',
     description='Mediainfo function of the Video on Demand on AWS solution',
     license='Apache-2.0',
-    url='https://github.com/awslabs/video-on-demand-on-aws/',
+    url='https://github.com/toneplex/video-on-demand-on-aws/',
     cmdclass={
         'build_pkg': BuildPackageCommand,
         'test': UnitTestsCommand

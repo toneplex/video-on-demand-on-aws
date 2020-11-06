@@ -46,15 +46,15 @@ Parameters:
     Default: Yes
     AllowedValues:
       - Yes
-      - No    
-  
+      - No
+
   EnableSqs:
     Description: Publish the workflow results to an SQS queue to injest upstream
     Type: String
     Default: Yes
     AllowedValues:
       - Yes
-      - No  
+      - No
 
   AcceleratedTranscoding:
     Description: Enable accelerated transcoding in AWS Elemental MediaConvert. PREFERRED will only use acceleration if the input files is supported. ENABLED accleration is applied to all files (this will fail for unsupported file types) see MediaConvert Documentation for more detail https://docs.aws.amazon.com/mediaconvert/latest/ug/accelerated-transcoding.html
@@ -728,16 +728,31 @@ Resources:
               - IsMediaPackageEnabled
               - !Sub "${AWS::StackName}_Ott_2160p_Avc_Aac_16x9_mvod"
               - !Sub "${AWS::StackName}_Ott_2160p_Avc_Aac_16x9_qvbr"
+          MediaConvert_Template_2160p_Portrait:
+            !If
+              - IsMediaPackageEnabled
+              - !Sub "${AWS::StackName}_Ott_2160p_Avc_Aac_9x16_mvod"
+              - !Sub "${AWS::StackName}_Ott_2160p_Avc_Aac_9x16_qvbr"
           MediaConvert_Template_1080p:
             !If
               - IsMediaPackageEnabled
               - !Sub "${AWS::StackName}_Ott_1080p_Avc_Aac_16x9_mvod"
               - !Sub "${AWS::StackName}_Ott_1080p_Avc_Aac_16x9_qvbr"
+          MediaConvert_Template_1080p_Portrait:
+            !If
+              - IsMediaPackageEnabled
+              - !Sub "${AWS::StackName}_Ott_1080p_Avc_Aac_9x16_mvod"
+              - !Sub "${AWS::StackName}_Ott_1080p_Avc_Aac_9x16_qvbr"
           MediaConvert_Template_720p:
             !If
               - IsMediaPackageEnabled
               - !Sub "${AWS::StackName}_Ott_720p_Avc_Aac_16x9_mvod"
               - !Sub "${AWS::StackName}_Ott_720p_Avc_Aac_16x9_qvbr"
+          MediaConvert_Template_720p_Portrait:
+            !If
+              - IsMediaPackageEnabled
+              - !Sub "${AWS::StackName}_Ott_720p_Avc_Aac_9x16_mvod"
+              - !Sub "${AWS::StackName}_Ott_720p_Avc_Aac_9x16_qvbr"
           CloudFront: !GetAtt CloudFront.DomainName
           EnableMediaPackage: !Ref EnableMediaPackage
           InputRotate: DEGREE_0
@@ -1676,7 +1691,7 @@ Outputs:
     Export:
       Name: !Join [":", [!Ref "AWS::StackName", SqsQueue]]
 
-  SqsARN: 
+  SqsARN:
     Description: AmazonSQS Queue ARN
-    Value: 
+    Value:
       !Sub ${SqsQueue.Arn}
