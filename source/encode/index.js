@@ -106,8 +106,9 @@ const getFrameGroup = (event, outputPath) => ({
                 FrameCaptureSettings: {
                     MaxCaptures: 10000000,
                     Quality: 80,
-                    FramerateDenominator: 5,
-                    FramerateNumerator: 1
+                    // Frame capture will encode the first frame of the output stream, then one frame every framerateDenominator/framerateNumerator seconds.
+                    FramerateDenominator: event.frameCaptureMs || 5000,
+                    FramerateNumerator: 1000
                 },
                 Codec: 'FRAME_CAPTURE'
             },
