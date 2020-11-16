@@ -76,7 +76,7 @@ exports.handler = async (event) => {
             // Match the jobTemplate to the encoding Profile.
             let jobTemplates;
 
-            if ([90.0, 270.0].includes(event.srcRotation )) {
+            if ([90.0, 270.0].includes(event.srcRotation ) || (event.srcRotation == 0 &&  event.srcWidth < event.srcHeight)) {
                 // portrait
                 jobTemplates = {
                     '2160': event.jobTemplate_2160p_Portrait,
